@@ -55,7 +55,7 @@ const h264 = ["-c:v", "libx264", "-preset", "slow", "-crf", "20", "-pix_fmt", "y
 // 4. A muted loop for the page, one with the music, a WebM, the poster.
 run(ffmpeg, ["-v", "error", "-y", "-i", blurred, ...h264, "-an", join(out, `${name}-1080p60.mp4`)]);
 run(ffmpeg, ["-v", "error", "-y", "-i", blurred, "-i", audio, ...h264, "-c:a", "aac", "-b:a", "256k", "-shortest", join(out, `${name}-1080p60-audio.mp4`)]);
-run(ffmpeg, ["-v", "error", "-y", "-i", blurred, "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "32", "-row-mt", "1", "-pix_fmt", "yuv420p", "-an", join(out, `${name}-1080p60.webm`)]);
+run(ffmpeg, ["-v", "error", "-y", "-i", blurred, "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "32", "-row-mt", "1", "-pix_fmt", "yuv420p", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv", "-an", join(out, `${name}-1080p60.webm`)]);
 run(ffmpeg, ["-v", "error", "-y", "-ss", String(posterSeconds), "-i", blurred, "-frames:v", "1", "-q:v", "2", join(out, "poster.jpg")]);
 
 // 5. Loop seam: the last 8 and first 8 frames, played twice back to back, in one sheet.
